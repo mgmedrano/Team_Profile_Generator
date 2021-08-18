@@ -3,64 +3,39 @@ const inquirer = require('inquirer');
 //requiring node standard library for writing file
 const fs = require('fs');
 
-inquirer
-    .prompt([{
+const Manager = require('./lib/Manager');
+const Intern = require('./lib/Intern');
+const Engineer = require('./lib/Engineer');
+
+const addManager = () => {
+    return inquirer.prompt([
+        {
             type: 'input',
-            name: 'title',
-            message: 'What is the name of the project?',
+            name: 'name',
+            message: 'Who is the Manager of this Team?',
         },
         {
             type: 'input',
-            name: 'description',
-            message: 'Enter Project description:',
-        },
-        {
-            type: 'input',
-            name: 'install',
-            message: 'Enter installation instructions (use commas for numbered list):',
-        },
-        {
-            type: 'input',
-            name: 'usage',
-            message: 'Enter Project usage information:',
-        },
-        {
-            type: 'input',
-            name: 'contribution',
-            message: 'Enter Project contribution guidelines:',
-        },
-        {
-            type: 'input',
-            name: 'test',
-            message: 'Enter Project test information:',
-        },
-        {
-            type: 'input',
-            name: 'gitHub',
-            message: 'What is your GitHub Username?',
+            name: 'id',
+            message: 'Please enter the Managers ID',
         },
         {
             type: 'input',
             name: 'email',
-            message: 'What is your email address?',
+            message: 'What is the Managers email address?',
         },
         {
-          type: "list",
-          name: "license",
-          choices: [
-              "MIT License",
-              "Attribution-NonCommercial 4.0 International",
-              "Eclipse Public License 1.0",
-              "IBM Public License Version 1.0",
-              "Mozilla Public License 2.0"
-          ]
-      }
+            type: 'input',
+            name: 'OfficeNumber',
+            message: 'What is the Managers Office Number?',
+        },
+      ])
     ])
-    .then((res) => {
-        console.log("Generating README.md...");
-        createREADMEFile(res);
-        
+}
+    .then(ManagerInput => {
+        const { name, id, email, OfficeNumber } = ManagerInput;
+        const manager = new Manager (name, id, email, OfficeNumber);
+        //TO DO LATER: push ManagerInput somewhere
+        console.log(manager);
     })
-    .catch((err) => {
-        console.log(err);
-    })
+    
