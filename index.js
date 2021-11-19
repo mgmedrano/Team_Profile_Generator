@@ -7,17 +7,34 @@ const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 const Engineer = require('./lib/Engineer');
 
+
 const addManager = () => {
     return inquirer.prompt([
         {
             type: 'input',
             name: 'name',
             message: 'Who is the Manager of this Team?',
+            validate: nameInput => {
+                if(nameInput) {
+                    return true;
+                } else {
+                    console.log("Manager's name is required");
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
             name: 'id',
             message: 'Please enter the Managers ID',
+            validate: nameInput => {
+                if (isNaN(nameInput)) {
+                    console.log("Manger's ID is required")
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         },
         {
             type: 'input',
@@ -29,13 +46,4 @@ const addManager = () => {
             name: 'OfficeNumber',
             message: 'What is the Managers Office Number?',
         },
-      ])
-    ])
-}
-    .then(ManagerInput => {
-        const { name, id, email, OfficeNumber } = ManagerInput;
-        const manager = new Manager (name, id, email, OfficeNumber);
-        //TO DO LATER: push ManagerInput somewhere
-        console.log(manager);
-    })
-    
+
